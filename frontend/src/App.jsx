@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
+import axios from "axios"
 
 export default function App() {
 
   const [photos, setPhotos] = useState(null);
-
+  /*
   useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/photos')
       .then(res => res.json())
@@ -12,7 +13,18 @@ export default function App() {
       });
 
   },[])
+  */
+ useEffect(() => {
+    axios.get('https://jsonplaceholder.typicode.com/photos')
+      .then(res => {
+        setPhotos(res.data.slice(0, 1));
+      });
+
+  },[])
+
+   
   return (
+    /*
     <div>
       {photos ? (
         <div key={photos[0].id}>
@@ -21,6 +33,17 @@ export default function App() {
         </div>
       ) : (
         <p>Loading...</p>
+      )}
+    </div>
+    */
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      {
+        photos ? (
+          <div key={photos[0].id}>
+            <img src={photos[0].url} alt={photos[0].title} />
+          </div>
+        ) : (
+          <p>loading....</p>
       )}
     </div>
   )
